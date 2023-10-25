@@ -18,8 +18,19 @@
         <button type="submit">Agregar Persona</button>
     </form>
 
-    
+    <input type="text" id="filterInput" placeholder="Buscar por nombre">
+    <button id="filterButton">Filtrar</button>
     <ul id="peopleList"></ul>
+
+    <form id="editForm" class="edit-form" style="display: none;">
+        <label for="editName">Nuevo nombre:</label>
+        <input type="text" id="editName" required>
+        <br>
+        <label for="editAge">Nueva edad:</label>
+        <input type="number" id="editAge" required>
+        <br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
 
     <script src="index.js">
     </script>

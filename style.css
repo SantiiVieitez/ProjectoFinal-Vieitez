@@ -43,3 +43,10 @@ li button {
 li button:hover {
     background-color: #c9302c;
 }
+
+.edit-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

@@ -56,30 +56,65 @@ function editPerson(id) {
     fetch(`https://651c5609194f77f2a5afb673.mockapi.io/Persona/${id}`)
         .then(response => response.json())
         .then(person => {
-            const name = prompt('Nuevo nombre:', person.name);
-            const age = prompt('Nueva edad:', person.age);
+            const editForm = document.getElementById('editForm');
+            editForm.style.display = 'block';
 
-            if (name !== null && age !== null) {
-                fetch(`https://651c5609194f77f2a5afb673.mockapi.io/Persona/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, age })
-                })
-                    .then(() => {
-                        alert(`Persona ${name} (ID: ${id}, Edad: ${age}) editada con éxito`);
-                        fetchAndDisplayData();
+            // Rellena el formulario con los datos actuales de la persona
+            document.getElementById('editName').value = person.name;
+            document.getElementById('editAge').value = person.age;
+
+            // Agrega un manejador de eventos para el envío del formulario de edición
+            editForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('editName').value;
+                const age = document.getElementById('editAge').value;
+
+                if (name !== '' && age !== '') {
+                    fetch(`https://651c5609194f77f2a5afb673.mockapi.io/Persona/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, age })
                     })
-                    .catch(error => {
-                        console.error('Error al editar persona:', error);
-                    });
-            }
+                        .then(() => {
+                            alert(`Persona ${name} (ID: ${id}, Edad: ${age}) editada con éxito`);
+                            fetchAndDisplayData();
+                            editForm.style.display = 'none';
+                        })
+                        .catch(error => {
+                            console.error('Error al editar persona:', error);
+                        });
+                }
+            });
         })
         .catch(error => {
             console.error('Error al obtener datos de la persona:', error);
         });
-}
+    }
 
+    
+    document.getElementById('filterButton').addEventListener('click', function () {
+    const filterTerm = document.getElementById('filterInput').value.toLowerCase();
+    
+    filterPeople(filterTerm);
+    });
+
+    function filterPeople(filterTerm) {
+        const peopleList = document.getElementById('peopleList');
+        const listItems = peopleList.getElementsByTagName('li');
+    
+        for (let i = 0; i < listItems.length; i++) {
+            const listItem = listItems[i];
+            const personName = listItem.textContent.toLowerCase();
+    
+            if (personName.includes(filterTerm)) {
+                listItem.style.display = 'block'; // Mostrar elementos que coincidan con el filtro
+            } else {
+                listItem.style.display = 'none'; // Ocultar elementos que no coincidan con el filtro
+            }
+        }
+    }
 // Cargar datos al cargar la página
 fetchAndDisplayData();
