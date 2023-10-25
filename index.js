@@ -110,9 +110,9 @@ function editPerson(id) {
             const personName = listItem.textContent.toLowerCase();
     
             if (personName.includes(filterTerm)) {
-                listItem.style.display = 'block'; // Mostrar elementos que coincidan con el filtro
+                listItem.style.display = 'block';
             } else {
-                listItem.style.display = 'none'; // Ocultar elementos que no coincidan con el filtro
+                listItem.style.display = 'none';
             }
         }
     }
